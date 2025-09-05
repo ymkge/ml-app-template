@@ -1,78 +1,77 @@
-# FastAPI + scikit-learn ML Application Template
+# FastAPI + scikit-learn MLアプリケーションテンプレート
 
-This is a template project for a machine learning application using FastAPI, scikit-learn, and Docker, with a CI/CD pipeline using GitHub Actions.
+これは、FastAPI、scikit-learn、Dockerを使用し、GitHub ActionsによるCI/CDパイプラインを備えた機械学習アプリケーションのテンプレートプロジェクトです。
 
-## Project Structure
+## プロジェクト構成
 
 ```
 ml-app-template/
 ├── app/
-│   ├── main.py         # FastAPI entrypoint
-│   ├── model.py        # Load model & predict
-│   ├── utils.py        # Helper functions
-│   ├── data.csv        # Training data
-│   └── model.pkl       # Trained model file
-├── train.py            # Model retraining script
-├── requirements.txt    # Dependencies
-├── Dockerfile          # Docker container definition
-├── docker-compose.yml  # For local development
+│   ├── main.py         # FastAPIのエントリーポイント
+│   ├── model.py        # モデルの読み込みと予測
+│   ├── utils.py        # ヘルパー関数
+│   ├── data.csv        # 訓練データ
+│   └── model.pkl       # 訓練済みモデルファイル
+├── train.py            # モデル再訓練スクリプト
+├── requirements.txt    # 依存関係
+├── Dockerfile          # Dockerコンテナ定義
+├── docker-compose.yml  # ローカル開発用
 ├── .github/
 │   └── workflows/
-│       └── ci-cd.yml   # GitHub Actions CI/CD pipeline
+│       └── ci-cd.yml   # GitHub Actions CI/CD パイプライン
 └── README.md
 ```
 
-## Getting Started
+## はじめに
 
-### Local Development
+### ローカル開発
 
-1.  **Build and run the container:**
+1.  **コンテナをビルドして実行します:**
     ```bash
     docker-compose up --build
     ```
-    The application will be available at `http://localhost:8000`.
+    アプリケーションは `http://localhost:8000` で利用可能になります。
 
-2.  **Test the endpoints:**
-    -   Health Check: `curl http://localhost:8000/health`
-    -   Prediction:
+2.  **エンドポイントをテストします:**
+    -   ヘルスチェック: `curl http://localhost:8000/health`
+    -   予測:
         ```bash
         curl -X POST "http://localhost:8000/predict" \
         -H "Content-Type: application/json" \
         -d '{"feature1": 0.5, "feature2": 0.5}'
         ```
 
-### Model Retraining
+### モデルの再訓練
 
-1.  **Update `app/data.csv`** with new data if necessary.
+1.  必要に応じて、新しいデータで **`app/data.csv` を更新します**。
 
-2.  **Run the training script:**
+2.  **訓練スクリプトを実行します:**
     ```bash
     python3 train.py
     ```
-    This will overwrite `app/model.pkl` with the newly trained model.
+    これにより、`app/model.pkl` が新しく訓練されたモデルで上書きされます。
 
-3.  **Rebuild your Docker image** to include the new model:
+3.  **新しいモデルを含めるためにDockerイメージを再ビルドします:**
     ```bash
     docker-compose up --build
     ```
 
-## CI/CD Pipeline
+## CI/CDパイプライン
 
-The CI/CD pipeline is configured in `.github/workflows/ci-cd.yml` and automates testing, building, and deploying the application.
+CI/CDパイプラインは `.github/workflows/ci-cd.yml` で設定されており、アプリケーションのテスト、ビルド、デプロイを自動化します。
 
-### Flow
+### フロー
 
-1.  **Trigger**: A push to the `main` branch.
-2.  **Lint & Test**: (Placeholder) Runs linters and tests.
-3.  **Build & Push**: Builds a Docker image and pushes it to GitHub Container Registry.
-4.  **Deploy**: Triggers a new deployment on Render.com using their deploy hook.
+1.  **トリガー**: `main` ブランチへのプッシュ。
+2.  **Lint & テスト**: (プレースホルダー) リンターとテストを実行します。
+3.  **ビルド & プッシュ**: Dockerイメージをビルドし、GitHub Container Registryにプッシュします。
+4.  **デプロイ**: Render.comのデプロイフックを使用して、新しいデプロイをトリガーします。
 
-### Setup
+### セットアップ
 
-To make the CI/CD pipeline work, you need to configure the following secrets in your GitHub repository (`Settings > Secrets and variables > Actions`):
+CI/CDパイプラインを機能させるには、GitHubリポジトリで次のシークレットを設定する必要があります (`Settings > Secrets and variables > Actions`)。
 
--   `RENDER_API_KEY`: Your API key from Render.
--   `RENDER_SERVICE_ID`: The ID of the service on Render you want to deploy to.
+-   `RENDER_API_KEY`: RenderからのAPIキー。
+-   `RENDER_SERVICE_ID`: デプロイ先のRender上のサービスのID。
 
-The Docker image will be pushed to GitHub Container Registry, which should be automatically enabled for your repository. You'll need to connect your Render service to this container registry.
-
+DockerイメージはGitHub Container Registryにプッシュされ、これはリポジトリで自動的に有効になるはずです。Renderサービスをこのコンテナレジストリに接続する必要があります。
