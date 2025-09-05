@@ -11,7 +11,7 @@ ml-app-template/
 │   ├── model.py        # モデルの読み込みと予測
 │   ├── utils.py        # ヘルパー関数
 │   ├── data.csv        # 訓練データ
-│   └── model.pkl       # 訓練済みモデルファイル
+│   └── model.pkl       # 訓練済みモデルファイル (CI/CD実行時に生成)
 ├── train.py            # モデル再訓練スクリプト
 ├── requirements.txt    # 依存関係
 ├── Dockerfile          # Dockerコンテナ定義
@@ -63,9 +63,10 @@ CI/CDパイプラインは `.github/workflows/ci-cd.yml` で設定されてお�
 ### フロー
 
 1.  **トリガー**: `main` ブランチへのプッシュ。
-2.  **Lint & テスト**: (プレースホルダー) リンターとテストを実行します。
-3.  **ビルド & プッシュ**: Dockerイメージをビルドし、GitHub Container Registryにプッシュします。
-4.  **デプロイ**: Render.comのデプロイフックを使用して、新しいデプロイをトリガーします。
+2.  **モデル訓練**: `train.py` を実行してモデルを生成します。
+3.  **Lint & テスト**: (プレースホルダー) リンターとテストを実行します。
+4.  **ビルド & プッシュ**: Dockerイメージをビルドし、GitHub Container Registryにプッシュします。
+5.  **デプロイ**: Render.comのデプロイフックを使用して、新しいデプロイをトリガーします。
 
 ### セットアップ
 
