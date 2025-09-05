@@ -1,13 +1,22 @@
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 import joblib
-import os
+from pathlib import Path
+
+# Get the project root directory (where train.py is located)
+# This makes the script runnable from anywhere.
+project_root = Path(__file__).parent
+
+# Define paths relative to the project root
+app_dir = project_root / "app"
+data_path = app_dir / "data.csv"
+model_path = app_dir / "model.pkl"
 
 # Ensure the app directory exists
-os.makedirs("/Users/ymto/Documents/git/ml-app-template/app", exist_ok=True)
+app_dir.mkdir(exist_ok=True)
 
 # Load data
-df = pd.read_csv("/Users/ymto/Documents/git/ml-app-template/app/data.csv")
+df = pd.read_csv(data_path)
 
 # Separate features and target
 X = df[['feature1', 'feature2']]
@@ -18,6 +27,6 @@ model = LogisticRegression()
 model.fit(X, y)
 
 # Save model
-joblib.dump(model, "/Users/ymto/Documents/git/ml-app-template/app/model.pkl")
+joblib.dump(model, model_path)
 
-print("Model trained and saved to /Users/ymto/Documents/git/ml-app-template/app/model.pkl")
+print(f"Model trained and saved to {model_path}")
