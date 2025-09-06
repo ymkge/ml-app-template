@@ -2,7 +2,7 @@
 
 これは、FastAPI、scikit-learn、Dockerを使用し、GitHub ActionsによるCI/CDパイプラインを備えた機械学習アプリケーションのテンプレートプロジェクトです。
 
-## プロジェクト構成 
+## プロジェクト構成
 
 ```
 ml-app-template/
